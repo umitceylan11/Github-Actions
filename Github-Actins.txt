@@ -1,0 +1,72 @@
+1.Attributes of Workflows:
+ 
+a.name:
+- Workflow'u tanimlar. Describe gibi.
+- Zorunlu degildir.
+
+b.on:
+- Triggers the workflow
+- Required
+- [push]
+
+Webhooks:
+- Branch reactions (commit, push ...)
+- Issues
+- Members (katilim, ayrilma ...)
+
+Scheduled:
+- Cron format
+
+c.jobs:
+- Workflowda icra edilecek isi tanimlar.
+- Wokflowda en az bir job olmali.
+- Her job'in bir identifier'i olmali.
+----------------------------------------------------------
+name : Hello World
+on : [push]
+jobs : 
+  say-hello :                      # identifier
+    runs-on : ubuntu-latest        
+    steps :
+    - name : Checkout
+      uses : actions/checkout@v2.0.0
+    - run : echo Hello, world!
+----------------------------------------------------------
+
+d.runs-on:
+- Icinde calisilacak containerin image'ini belirtir.
+- Icinde calisilan containerlere "Runners" denir.
+- Ubuntu 18.04, Windows Server 2019 ve macOS Catalina 10.15.
+- Ayrica self hosted runners (kendi yaptiginiz containers) imkani da var.
+-------------------------------------------------------------
+  runs-on: ubuntu-latest
+-------------------------------------------------------------
+  - tek OS
+-------------------------------------------------------------
+  runs-on: ${{matrix.os}}
+  strategy:
+    matrix: 
+      os: [ubuntu:latest, windows:latest, macOS:latest]
+-------------------------------------------------------------
+  - bircik OS'de calistirmak icin kullanilir.
+
+e.steps:
+- List of actions or commands
+- Access to the file system
+- Each step runs in its own process
+
+f.uses:
+- Identifies an action to use
+- Defines the location of that action
+- Actions are docker images
+- "actions" kullanilacaksa kullanilir.
+
+g.run:
+- shell'de komutlari run eder.
+
+h.name (steps'in):
+- Required
+
+
+
+

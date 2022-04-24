@@ -1,0 +1,114 @@
+1.Hands-on 1:
+- CI
+> my-project (reposu olusturduk, public)
+  > git push (gradle kullanan bir java projesi yukledik.)
+  > Actions > Java witg Gradle (template'i sectik)
+  > gradle.yaml (dosyasini acti)
+------------------------------------------------------------------
+name: Java CI with Gradle            # Describes workflow. Opt.
+
+on:                                  # Events: trigger edecek eventler. Req.
+  push:                              # Event: pushlarda tetikler.
+    branches: [ master ]
+  pull_request:                      # Event: master bransi target olacak sekilde pull request oldukca tetikler. 
+    branches: [ master ]
+
+jobs:                                # Yapilacaklar. Req.
+  build:                             # Tanimlama. Ozel isim.
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2      # actions altindaki v2 versiyonlu checkout reposu
+
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1    # java yuklu env
+      with:
+        java-version: 1.8
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    
+    - name: Build witg Gradle
+      run: ./gradlew build           # Yukarda olusan env'da build yapar.
+------------------------------------------------------------------
+  - steps: can run an command, setup tasks or run an action
+  - uses: action repository'sini kullanirken kullanilir.
+  - run: script yazarken kullanilir.
+  - runs in parallel by default.
+  - runs-on: Ubuntu, Windows or macOS
+
+Actions code'larini inceleme:
+- Oncelikle checkout'u inceliyoruz.
+> github.com/actions > checkout > action.yml 
+
+
+
+2.Hands-on 2:
+- Build Docker image and push to private repo:
+> Java app with Gradle in repo > Build Artifact > Build Docker image > push to private repo 
+
+------------------------------------------------------------------
+name: Java CI with Gradle            # Describes workflow. Opt.
+
+on:                                  # Events: trigger edecek eventler. Req.
+  push:                              # Event: pushlarda tetikler.
+    branches: [ master ]
+  pull_request:                      # Event: master bransi target olacak sekilde pull request oldukca tetikler. 
+    branches: [ master ]
+
+jobs:                                # Yapilacaklar. Req.
+  build:                             # Tanimlama. Ozel isim.
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2      # actions altindaki v2 versiyonlu checkout reposu
+
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1    # java yuklu env
+      with:
+        java-version: 1.8
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    
+    - name: Build witg Gradle
+      run: ./gradlew build           # Yukarda olusan env'da build yapar.
+
+    - name: Build and Push Docker Image
+ #    run: |                         # "|": multi command girilebilir asagiya.
+ #      docker login (credentials)
+ #      docker build ...
+ #      docker tag ...
+      uses: mr-smithers-excellent/docker-build-push@v4
+      with:
+        image: nanajanashia/demo-app            # image repository name/image name
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+------------------------------------------------------------------
+  > google.com > docker build and push action > "github.com/marketplace/actions/docker-build-push" seklindeki dosyaya girilir.
+    > secretleri asagida oldugu gibi kaydederiz docker hub'a girmek icin.
+
+
+> repo > Settings > Secrets > New Secret > Name: DOCKER_USERNAME > Value: nanajanashia
+> repo > Settings > Secrets > New Secret > Name: DOCKER_PASSWORD > Value: Ugur11,h
+  - workflow secretleri github'tan ceker.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
