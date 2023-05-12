@@ -1,0 +1,20 @@
+name: GitHub Actions Demo
+on: push
+jobs: 
+  Example-Actions-Job:
+    name: Exploring Github Actions
+    steps:
+      # Display the event that triggered the workflow:
+      - run: echo "The job was triggered by a ${{ github.event_name }} event."
+      
+      # Runner information:
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub."
+      
+      # Information about the repository and branch: 
+      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      
+      # Use action located in https://github.com/actions:
+      - name: Check out resository code
+        uses: actions/checkout@v2
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      
